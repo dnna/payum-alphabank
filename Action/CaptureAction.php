@@ -22,7 +22,7 @@ class CaptureAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        throw new \LogicException('Not implemented');
+        //throw new \LogicException('Not implemented');
     }
 
     /**
