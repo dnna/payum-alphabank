@@ -24,10 +24,5 @@
     "autoload": {
         "psr-0": { "Dnna\\Payum\\AlphaBank": "" }
     },
-    "target-dir": "Dnna/Payum/AlphaBank",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.5-dev"
-        }
-    }
+    "target-dir": "Dnna/Payum/AlphaBank"
 }
