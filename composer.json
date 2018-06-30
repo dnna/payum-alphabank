@@ -1,0 +1,33 @@
+{
+    "name": "dnna/payum-alphabank",
+    "type": "project",
+    "description": "Payum Alpha Bank gateway",
+    "keywords": ["payment"],
+    "homepage": "https://payum.forma-pro.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dimosthenis Nikoudis",
+            "email": "dnna@dnna.gr"
+        }
+    ],
+    "require": {
+        "payum/core": "^1.5"
+    },
+    "require-dev": {
+        "payum/core": "^1.5@dev",
+        "php-http/guzzle6-adapter": "^1.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": { "Dnna\\Payum\\AlphaBank": "" }
+    },
+    "target-dir": "Dnna/Payum/AlphaBank",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.5-dev"
+        }
+    }
+}
