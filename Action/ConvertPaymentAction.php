@@ -14,11 +14,13 @@ class ConvertPaymentAction implements ActionInterface
 
     private $isSandbox;
     private $useMasterPass;
+    private $lang;
     private $cssUrl;
 
-    public function __construct(bool $isSandbox, bool $useMasterPass, string $cssUrl) {
+    public function __construct(bool $isSandbox, bool $useMasterPass, string $lang, string $cssUrl) {
         $this->isSandbox = $isSandbox;
         $this->useMasterPass = $useMasterPass;
+        $this->lang = $lang;
         $this->cssUrl = $cssUrl;
     }
 
@@ -35,6 +37,7 @@ class ConvertPaymentAction implements ActionInterface
         $payment = $request->getSource();
 
         $details = ArrayObject::ensureArrayObject($payment->getDetails());
+        $details['lang'] = $this->lang;
         $details['orderid'] = $payment->getNumber();
         $details['orderDesc'] = $payment->getDescription();
         $details['orderAmount'] = $payment->getTotalAmount()/100;
@@ -49,8 +52,6 @@ class ConvertPaymentAction implements ActionInterface
         if($this->cssUrl != null) {
             $details['cssUrl'] = $this->cssUrl;
         }
-
-        $details['var2'] = $payment->getNumber();
 
         $request->setResult((array) $details);
     }

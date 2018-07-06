@@ -35,7 +35,7 @@ class AlphaBankGatewayFactory extends GatewayFactory
                 return new CreateChargeAction($config['payum.template.create_charge'], $actionUrl, $config['mid'], $config['sharedSecretKey']);
             },
             'payum.action.convert_payment' => function (ArrayObject $config) {
-                return new ConvertPaymentAction($config['sandbox'], $config['useMasterPass'], $config['cssUrl']);
+                return new ConvertPaymentAction($config['sandbox'], $config['useMasterPass'], $config['lang'], $config['cssUrl']);
             },
             'payum.action.status' => new StatusAction(),
         ]);
@@ -45,11 +45,12 @@ class AlphaBankGatewayFactory extends GatewayFactory
                 'mid' => '',
                 'sharedSecretKey' => '',
                 'useMasterPass' => false,
+                'lang' => 'el',
                 'cssUrl' => '',
                 'sandbox' => true,
             );
             $config->defaults($config['payum.default_options']);
-            $config['payum.required_options'] = ['useMasterPass'];
+            $config['payum.required_options'] = [];
 
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);

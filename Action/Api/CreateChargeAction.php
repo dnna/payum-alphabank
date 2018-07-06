@@ -96,6 +96,7 @@ class CreateChargeAction extends BaseApiAwareAction
         foreach($model as $k => $v) { if(!isset($mappedModel[$k])) { $mappedModel[$k] = $v; } }
         $mappedModel['confirmUrl'] = $request->getToken()->getTargetUrl();
         $mappedModel['cancelUrl'] = $request->getToken()->getTargetUrl();
+        $mappedModel['var2'] = $mappedModel['orderid'];
         $mappedModel['orderid'] = md5($mappedModel['orderid'].'H'.$request->getToken()->getHash().$retries);
 
         unset($mappedModel['sharedSecretKey']);
