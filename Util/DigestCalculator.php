@@ -19,7 +19,7 @@ final class DigestCalculator {
             if($curValue instanceof SensitiveValue) {
                 $curValue = $curValue->get();
             }
-            $string .= utf8_encode($curValue);
+            $string .= $curValue;
         }
         $string .= $this->sharedSecretKey;
         return base64_encode(sha1($string, true));
@@ -29,7 +29,7 @@ final class DigestCalculator {
         unset($model['digest']);
         $string = '';
         foreach($model as $curValue) {
-            $string .= utf8_encode($curValue);
+            $string .= $curValue;
         }
         $string .= $this->sharedSecretKey;
         $newDigest = base64_encode(sha1($string, true));
