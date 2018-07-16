@@ -1,0 +1,21 @@
+{% extends layout ?: "@PayumCore/layout.html.twig" %}
+
+{% block payum_body %}
+    <form id="shopform1" name="demo" method="POST" action="{{actionUrl}}" accept-charset="UTF-8" >
+    {% for field,value in model %}
+        <input type="hidden" name="{{field}}" value="{{value}}"/>
+    {% endfor %}
+        <!-- Button Fallback -->
+        <div class="payment_buttons">
+            <input type="submit" id="payment_button" />
+        </div>
+        <script type="text/javascript">
+            (function() {
+                var link = document.getElementById('payment_button');
+                link.style.display = 'none';
+                link.click();
+            })();
+        </script>
+    </form>
+    Παρακαλώ περιμένετε...
+{% endblock %}

@@ -4,10 +4,13 @@ namespace Dnna\Payum\AlphaBank\Action;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareTrait;
+use Payum\Core\GatewayAwareInterface;
 use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
 
-class CaptureAction implements ActionInterface
+use Dnna\Payum\AlphaBank\Request\Api\CreateCharge;
+
+class CaptureAction implements ActionInterface, GatewayAwareInterface
 {
     use GatewayAwareTrait;
 
@@ -22,7 +25,13 @@ class CaptureAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        //throw new \LogicException('Not implemented');
+        if ($model['status']) {
+            return;
+        }
+
+        $createCharge = new CreateCharge($request->getToken());
+        $createCharge->setModel($model);
+        $this->gateway->execute($createCharge);
     }
 
     /**
