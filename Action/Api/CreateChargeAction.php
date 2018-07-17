@@ -103,7 +103,7 @@ class CreateChargeAction extends BaseApiAwareAction
         $mappedModel['var2'] = $mappedModel['orderid'];
         $mappedModel['orderid'] = md5($mappedModel['orderid'].'H'.$request->getToken()->getHash().$retries);
 
-        unset($mappedModel['sharedSecretKey']);
+        if(isset($mappedModel['sharedSecretKey'])) unset($mappedModel['sharedSecretKey']);
         unset($mappedModel['retries']);
 
         $mappedModel['digest'] = $digestCalculator->calculateDigest($mappedModel);
