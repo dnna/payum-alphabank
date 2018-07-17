@@ -38,7 +38,11 @@ class CreateChargeAction extends BaseApiAwareAction
         }
 
         if(isset($model['sharedSecretKey'])) {
-            $digestCalculator = new DigestCalculator($model['sharedSecretKey']->peek());
+            if($model['sharedSecretKey'] instanceof SensitiveValue) {
+                $digestCalculator = new DigestCalculator($model['sharedSecretKey']->peek());
+            } else {
+                $digestCalculator = new DigestCalculator($model['sharedSecretKey']);
+            }
         } elseif($this->sharedSecretKey != null) {
             $digestCalculator = new DigestCalculator($this->sharedSecretKey);
         } else {
