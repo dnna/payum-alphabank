@@ -101,6 +101,23 @@ class CreateChargeAction extends BaseApiAwareAction
         $mappedModel['confirmUrl'] = $request->getToken()->getTargetUrl();
         $mappedModel['cancelUrl'] = $request->getToken()->getTargetUrl();
         $mappedModel['var2'] = $mappedModel['orderid'];
+
+        if(isset($model['custom3'])) {
+            $mappedModel['var3'] = $model['custom3'];
+            unset($mappedModel['custom3']);
+        }
+
+        if(isset($model['custom4'])) {
+            $mappedModel['var4'] = $model['custom4'];
+            unset($mappedModel['custom4']);
+        }
+
+        if(isset($model['custom5'])) {
+            $mappedModel['var5'] = $model['custom5'];
+            unset($mappedModel['custom5']);
+        }
+
+
         $mappedModel['orderid'] = md5($mappedModel['orderid'].'H'.$request->getToken()->getHash().$retries);
 
         if(isset($mappedModel['sharedSecretKey'])) unset($mappedModel['sharedSecretKey']);
