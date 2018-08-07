@@ -30,7 +30,7 @@ class AlphaBankGatewayFactory extends GatewayFactory
                 if($config['sandbox'] == true) {
                     $actionUrl = 'https://alpha.test.modirum.com/vpos/shophandlermpi';
                 } else {
-                    throw new \Exception('Production URL not known yet');
+                    $actionUrl = 'https://www.alphaecommerce.gr/vpos/shophandlermpi';
                 }
                 return new CreateChargeAction($config['payum.template.create_charge'], $actionUrl, $config['mid'], $config['sharedSecretKey']);
             },
