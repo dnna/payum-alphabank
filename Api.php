@@ -1,4 +1,5 @@
 <?php
+
 namespace Dnna\Payum\AlphaBank;
 
 use Http\Message\MessageFactory;
@@ -23,9 +24,9 @@ class Api
     protected $options = [];
 
     /**
-     * @param array               $options
+     * @param array $options
      * @param HttpClientInterface $client
-     * @param MessageFactory      $messageFactory
+     * @param MessageFactory $messageFactory
      *
      * @throws \Payum\Core\Exception\InvalidArgumentException if an option is invalid
      */
@@ -37,15 +38,31 @@ class Api
     }
 
     /**
-     * @param array $fields
-     *
-     * @return array
+     * @param string $data
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function doRequest($method, array $fields)
+    public function sendXMLRequest(string $data): \Psr\Http\Message\ResponseInterface
+    {
+        $endpoint = $this->getApiEndpoint() . '/xmlpayvpos';
+        return $this->doRequest('POST', $endpoint, $data);
+    }
+
+    /**
+     * @param $method
+     * @param string $endpoint
+     * @param string $body
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function doRequest($method, string $endpoint, string $body): \Psr\Http\Message\ResponseInterface
     {
         $headers = [];
 
-        $request = $this->messageFactory->createRequest($method, $this->getApiEndpoint(), $headers, http_build_query($fields));
+        $request = $this->messageFactory->createRequest(
+            $method,
+            $endpoint,
+            $headers,
+            $body
+        );
 
         $response = $this->client->send($request);
 
@@ -59,8 +76,8 @@ class Api
     /**
      * @return string
      */
-    protected function getApiEndpoint()
+    protected function getApiEndpoint(): string
     {
-        return $this->options['sandbox'] ? 'http://sandbox.example.com' : 'http://example.com';
+        return $this->options['sandbox'] ? 'https://alpha.test.modirum.com/vpos' : 'https://www.alphaecommerce.gr/vpos';
     }
 }

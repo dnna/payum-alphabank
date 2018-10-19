@@ -8,7 +8,7 @@ use Payum\Core\GatewayAwareInterface;
 use Payum\Core\Request\Refund;
 use Payum\Core\Exception\RequestNotSupportedException;
 
-use Dnna\Payum\AlphaBank\Request\Api\CreateCharge;
+use Dnna\Payum\AlphaBank\Request\Api\RequestRefund;
 
 class RefundAction implements ActionInterface, GatewayAwareInterface
 {
@@ -17,21 +17,30 @@ class RefundAction implements ActionInterface, GatewayAwareInterface
     /**
      * {@inheritDoc}
      *
-     * @param Capture $request
+     * @param Refund $request
      */
-    public function execute($request)
+    public function execute($request): void
     {
         RequestNotSupportedException::assertSupports($this, $request);
 
-        //$model = ArrayObject::ensureArrayObject($request->getModel());
+        $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        throw new \LogicException('Not supported');
+        if ($model['status'] === 'REFUNDED') {
+            return;
+        }
+        if ($model['status'] !== 'CAPTURED') {
+            throw new \DomainException('Cannot refund a non-captured transaction');
+        }
+
+        $requestRefund = new RequestRefund($request->getToken());
+        $requestRefund->setModel($model);
+        $this->gateway->execute($requestRefund);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function supports($request)
+    public function supports($request): bool
     {
         return
             $request instanceof Refund &&

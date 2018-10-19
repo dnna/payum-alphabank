@@ -8,6 +8,9 @@ use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Dnna\Payum\AlphaBank\Api;
 
+/**
+ * @property Api $api
+ */
 abstract class BaseApiAwareAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
     use GatewayAwareTrait;

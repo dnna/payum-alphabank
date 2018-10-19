@@ -95,6 +95,8 @@ class CreateChargeAction extends BaseApiAwareAction
             $model['retries'] = 1;
         }
 
+        $model['hashedOrderid'] = md5($model['orderid'] . 'H' . $request->getToken()->getHash() . $retries);
+
         $mappedModel = new ArrayObject();
         if (isset($model['mid'])) {
             $mappedModel['mid'] = $model['mid'];
@@ -127,8 +129,8 @@ class CreateChargeAction extends BaseApiAwareAction
             unset($mappedModel['custom5']);
         }
 
-
-        $mappedModel['orderid'] = md5($mappedModel['orderid'] . 'H' . $request->getToken()->getHash() . $retries);
+        $mappedModel['orderid'] = $model['hashedOrderid'];
+        unset($mappedModel['hashedOrderid']);
 
         if (isset($mappedModel['sharedSecretKey'])) {
             unset($mappedModel['sharedSecretKey']);
@@ -136,8 +138,6 @@ class CreateChargeAction extends BaseApiAwareAction
         unset($mappedModel['retries']);
 
         $mappedModel['digest'] = $digestCalculator->calculateDigest($mappedModel);
-
-        $model['hashedOrderid'] = $mappedModel['orderid'];
 
         $this->gateway->execute(
             $renderTemplate = new RenderTemplate(

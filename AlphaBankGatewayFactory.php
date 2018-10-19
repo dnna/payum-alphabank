@@ -2,6 +2,7 @@
 
 namespace Dnna\Payum\AlphaBank;
 
+use Dnna\Payum\AlphaBank\Action\Api\RequestRefundAction;
 use Dnna\Payum\AlphaBank\Action\ConvertPaymentAction;
 use Dnna\Payum\AlphaBank\Action\CaptureAction;
 use Dnna\Payum\AlphaBank\Action\RefundAction;
@@ -36,6 +37,12 @@ class AlphaBankGatewayFactory extends GatewayFactory
                     return new CreateChargeAction(
                         $config['payum.template.create_charge'],
                         $actionUrl,
+                        $config['mid'],
+                        $config['sharedSecretKey']
+                    );
+                },
+                'payum.action.request_refund' => function (ArrayObject $config) {
+                    return new RequestRefundAction(
                         $config['mid'],
                         $config['sharedSecretKey']
                     );
