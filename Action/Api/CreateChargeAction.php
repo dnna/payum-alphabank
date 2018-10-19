@@ -94,6 +94,7 @@ class CreateChargeAction extends BaseApiAwareAction
             $retries = '';
             $model['retries'] = 1;
         }
+        $model['hashedOrderid'] = md5($model['orderid'] . 'H' . $request->getToken()->getHash() . $retries);
 
         $mappedModel = new ArrayObject();
         if (isset($model['mid'])) {
