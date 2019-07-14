@@ -25,6 +25,7 @@ final class DigestCalculator
             $string .= $curValue;
         }
         $string .= $this->sharedSecretKey;
+        error_log($string);
 
         return base64_encode(sha1($string, true));
     }

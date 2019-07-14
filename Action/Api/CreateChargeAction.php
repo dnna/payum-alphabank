@@ -76,6 +76,15 @@ class CreateChargeAction extends BaseApiAwareAction
             if (isset($getHttpRequest->request['paymentRef'])) {
                 $newModel['paymentRef'] = $getHttpRequest->request['paymentRef'];
             }
+            if (isset($getHttpRequest->request['extToken'])) {
+                $newModel['extToken'] = $getHttpRequest->request['extToken'];
+            }
+            if (isset($getHttpRequest->request['extTokenPanEnd'])) {
+                $newModel['extTokenPanEnd'] = $getHttpRequest->request['extTokenPanEnd'];
+            }
+            if (isset($getHttpRequest->request['extTokenExp'])) {
+                $newModel['extTokenExp'] = $getHttpRequest->request['extTokenExp'];
+            }
             if ($digestCalculator->verifyDigest($getHttpRequest->request, $getHttpRequest->request['digest'])) {
                 foreach ($newModel as $k => $v) {
                     $model[$k] = $v;
@@ -112,6 +121,14 @@ class CreateChargeAction extends BaseApiAwareAction
         }
         $mappedModel['confirmUrl'] = $request->getToken()->getTargetUrl();
         $mappedModel['cancelUrl'] = $request->getToken()->getTargetUrl();
+        if (isset($model['extTokenOptions'])) {
+            unset($mappedModel['extTokenOptions']);
+            $mappedModel['extTokenOptions'] = $model['extTokenOptions'];
+        }
+        if (isset($model['extToken'])) {
+            unset($mappedModel['extToken']);
+            $mappedModel['extToken'] = $model['extToken'];
+        }
         $mappedModel['var2'] = $mappedModel['orderid'];
 
         if (isset($model['custom3'])) {

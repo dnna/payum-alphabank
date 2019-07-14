@@ -16,6 +16,7 @@ Notes:
  - The orderid passed to Alpha Bank is a randomized string and does not correspond to the actual order number. This enables the user to make multiple payment retries for the same order. The real orderid is passed in Alpha Bank's var2 field.
  - You can set var3 to var5 by setting custom3 to custom5 on "details" attribute.
  - To use the installments functionality, the fields "extInstallmentoffset" and "extInstallmentperiod" must be passed in the payment model's "details" attribute.
+ - To use card tokenization functionality, the fields "extTokenOptions" or "extToken" must be passed in the payment model's "details" attribute.
 
 ## License
 
