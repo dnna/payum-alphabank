@@ -25,16 +25,15 @@ final class DigestCalculator
             $string .= $curValue;
         }
         $string .= $this->sharedSecretKey;
-        error_log($string);
 
-        return base64_encode(sha1($string, true));
+        return base64_encode(hash('sha256', $string, true));
     }
 
     public function calculateDigestForString(string $string): string
     {
         $string .= $this->sharedSecretKey;
 
-        return base64_encode(sha1($string, true));
+        return base64_encode(hash('sha256', $string, true));
     }
 
     public function verifyDigest(array $model, string $digest): bool
@@ -45,7 +44,7 @@ final class DigestCalculator
             $string .= $curValue;
         }
         $string .= $this->sharedSecretKey;
-        $newDigest = base64_encode(sha1($string, true));
+        $newDigest = base64_encode(hash('sha256', $string, true));
 
         return $newDigest === $digest;
     }

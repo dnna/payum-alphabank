@@ -107,6 +107,9 @@ class CreateChargeAction extends BaseApiAwareAction
         $model['hashedOrderid'] = md5($model['orderid'] . 'H' . $request->getToken()->getHash() . $retries);
 
         $mappedModel = new ArrayObject();
+        if (isset($model['version'])) {
+            $mappedModel['version'] = $model['version'];
+        }
         if (isset($model['mid'])) {
             $mappedModel['mid'] = $model['mid'];
         } elseif ($this->mid != null) {

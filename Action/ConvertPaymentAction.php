@@ -1,4 +1,5 @@
 <?php
+
 namespace Dnna\Payum\AlphaBank\Action;
 
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -17,7 +18,8 @@ class ConvertPaymentAction implements ActionInterface
     private $lang;
     private $cssUrl;
 
-    public function __construct(bool $isSandbox, bool $useMasterPass, string $lang, string $cssUrl) {
+    public function __construct(bool $isSandbox, bool $useMasterPass, string $lang, string $cssUrl)
+    {
         $this->isSandbox = $isSandbox;
         $this->useMasterPass = $useMasterPass;
         $this->lang = $lang;
@@ -29,7 +31,7 @@ class ConvertPaymentAction implements ActionInterface
      *
      * @param Convert $request
      */
-    public function execute($request)
+    public function execute($request): void
     {
         RequestNotSupportedException::assertSupports($this, $request);
 
@@ -37,34 +39,34 @@ class ConvertPaymentAction implements ActionInterface
         $payment = $request->getSource();
 
         $details = ArrayObject::ensureArrayObject($payment->getDetails());
+        $details['version'] = 2;
         $details['lang'] = $this->lang;
         $details['orderid'] = $payment->getNumber();
         $details['orderDesc'] = $payment->getDescription();
-        $details['orderAmount'] = $payment->getTotalAmount()/100;
+        $details['orderAmount'] = $payment->getTotalAmount() / 100;
         $details['currency'] = $payment->getCurrencyCode();
         $details['payerEmail'] = $payment->getClientEmail();
-        if($this->isSandbox) {
+        if ($this->isSandbox) {
             $details['orderAmount'] = 0.5; // Alpha Bank's sandbox requires <1 EUR
         }
-        if($this->useMasterPass == true) {
+        if ($this->useMasterPass == true) {
             $details['payMethod'] = 'auto:MasterPass';
         }
-        if($this->cssUrl != null) {
+        if ($this->cssUrl != null) {
             $details['cssUrl'] = $this->cssUrl;
         }
 
-        $request->setResult((array) $details);
+        $request->setResult((array)$details);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function supports($request)
+    public function supports($request): bool
     {
         return
             $request instanceof Convert &&
             $request->getSource() instanceof PaymentInterface &&
-            $request->getTo() == 'array'
-        ;
+            $request->getTo() == 'array';
     }
 }
