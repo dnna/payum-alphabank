@@ -122,6 +122,10 @@ class CreateChargeAction extends BaseApiAwareAction
                 $mappedModel[$k] = $v;
             }
         }
+        if (isset($model['billCountry'])) {
+            unset($mappedModel['billCountry']);
+            $mappedModel['billCountry'] = $model['billCountry'];
+        }
         if (isset($model['billState'])) {
             unset($mappedModel['billState']);
             $mappedModel['billState'] = $model['billState'];
