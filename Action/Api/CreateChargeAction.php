@@ -122,6 +122,22 @@ class CreateChargeAction extends BaseApiAwareAction
                 $mappedModel[$k] = $v;
             }
         }
+        if (isset($model['billState'])) {
+            unset($mappedModel['billState']);
+            $mappedModel['billState'] = $model['billState'];
+        }
+        if (isset($model['billZip'])) {
+            unset($mappedModel['billZip']);
+            $mappedModel['billZip'] = $model['billZip'];
+        }
+        if (isset($model['billCity'])) {
+            unset($mappedModel['billCity']);
+            $mappedModel['billCity'] = $model['billCity'];
+        }
+        if (isset($model['billAddress'])) {
+            unset($mappedModel['billAddress']);
+            $mappedModel['billAddress'] = $model['billAddress'];
+        }
         $mappedModel['confirmUrl'] = $request->getToken()->getTargetUrl();
         $mappedModel['cancelUrl'] = $request->getToken()->getTargetUrl();
         if (isset($model['extTokenOptions'])) {
