@@ -36,6 +36,13 @@ final class DigestCalculator
         return base64_encode(hash('sha256', $string, true));
     }
 
+    public function calculateDigestForStringSha1(string $string): string
+    {
+        $string .= $this->sharedSecretKey;
+
+        return base64_encode(hash('sha1', $string, true));
+    }
+
     public function verifyDigest(array $model, string $digest): bool
     {
         unset($model['digest']);

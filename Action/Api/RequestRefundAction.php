@@ -86,7 +86,7 @@ class RequestRefundAction extends BaseApiAwareAction
 
             $xmlHandler = new XMLHandler();
             $messageXml = $xmlHandler->arrayToXml($data)->Message->asXML();
-            $digest = $digestCalculator->calculateDigestForString($messageXml);
+            $digest = $digestCalculator->calculateDigestForStringSha1($messageXml);
 
             $data['VPOS']['Digest'] = $digest;
 
