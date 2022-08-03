@@ -78,6 +78,6 @@ class Api
      */
     protected function getApiEndpoint(): string
     {
-        return $this->options['sandbox'] ? 'https://alpha.test.modirum.com/vpos' : 'https://www.alphaecommerce.gr/vpos';
+        return $this->options['sandbox'] ? 'https://ecommerce-test.cardlink.gr/vpos' : 'https://www.alphaecommerce.gr/vpos';
     }
 }

@@ -29,7 +29,7 @@ class AlphaBankGatewayFactory extends GatewayFactory
                 'payum.action.refund' => new RefundAction(),
                 'payum.action.create_charge' => function (ArrayObject $config) {
                     if ($config['sandbox'] == true) {
-                        $actionUrl = 'https://alpha.test.modirum.com/vpos/shophandlermpi';
+                        $actionUrl = 'https://ecommerce-test.cardlink.gr/vpos/shophandlermpi';
                     } else {
                         $actionUrl = 'https://www.alphaecommerce.gr/vpos/shophandlermpi';
                     }
